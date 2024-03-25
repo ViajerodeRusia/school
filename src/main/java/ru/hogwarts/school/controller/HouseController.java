@@ -41,13 +41,21 @@ public class HouseController {
         return ResponseEntity.ok(foundHouse);
     }
 
-    @GetMapping //GET https://localhost:8080/students
-    public ResponseEntity<Collection<House>> getAllHouses() {
+    @GetMapping //GET https://localhost:8080/houses
+    public ResponseEntity getAllHouses(@RequestParam(required = false) String name,
+                                                          @RequestParam(required = false) String color) {
+        if(name != null && !name.isBlank()) {
+            return ResponseEntity.ok(houseService.findHouseByName(name));
+        }
+        if(color != null && !color.isBlank()) {
+            return ResponseEntity.ok(houseService.findHouseByColor(color));
+        }
         return ResponseEntity.ok(houseService.getAllHouses());
     }
 
-    @DeleteMapping("{id}") //DELETE https://localhost:8080/students
-    public House deleteHouse(@PathVariable Long id) {
-        return houseService.deleteHouse(id);
+    @DeleteMapping("{id}") //DELETE https://localhost:8080/houses
+    public ResponseEntity deleteHouse(@PathVariable Long id) {
+        houseService.deleteHouse(id);
+        return ResponseEntity.ok().build();
     }
 }

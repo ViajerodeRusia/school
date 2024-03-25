@@ -42,12 +42,19 @@ public class StudentController {
     }
 
     @GetMapping //GET https://localhost:8080/students
-    public ResponseEntity<Collection<Student>> getAllStudents() {
+    public ResponseEntity<Collection<Student>> getAllStudents(@RequestParam(required = false) Integer min,
+                                                              @RequestParam(required = false) Integer max) {
+        System.out.println("min: " + min); // Добавляем эту строку для проверки
+        System.out.println("max: " + max); // Добавляем эту строку для проверки
+        if(min != null && max != null) {
+            ResponseEntity.ok(studentService.findStudentByAge(min, max));
+        }
         return ResponseEntity.ok(studentService.getAllStudents());
     }
 
     @DeleteMapping("{id}") //DELETE https://localhost:8080/students
-    public Student deleteStudent(@PathVariable Long id) {
-        return studentService.deleteStudent(id);
+    public ResponseEntity deleteStudent(@PathVariable Long id) {
+        studentService.deleteStudent(id);
+        return ResponseEntity.ok().build();
     }
 }

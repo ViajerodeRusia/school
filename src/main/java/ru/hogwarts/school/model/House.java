@@ -1,13 +1,21 @@
 package ru.hogwarts.school.model;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
 
 import java.util.Objects;
-
+@Entity
 public class House {
+    @Id
+    @GeneratedValue
     private long id;
     private String name;
     private String color;
+
+    public House() {
+    }
 
     public House(long id, String name, String color) {
         this.id = id;

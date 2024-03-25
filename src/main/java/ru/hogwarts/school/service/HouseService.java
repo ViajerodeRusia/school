@@ -2,31 +2,38 @@ package ru.hogwarts.school.service;
 
 import org.springframework.stereotype.Service;
 import ru.hogwarts.school.model.House;
+import ru.hogwarts.school.repository.HouseRepository;
 
 import java.util.Collection;
-import java.util.HashMap;
 
 @Service
 public class HouseService {
-    private final HashMap<Long, House> houses = new HashMap<>();
-    private long lastId = 0;
+    public final HouseRepository houseRepository;
+
+    public HouseService(HouseRepository houseRepository) {
+        this.houseRepository = houseRepository;
+    }
 
     public House createHouse(House house) {
-        house.setId(++lastId);
-        houses.put(lastId, house);
+        houseRepository.save(house);
         return house;
     }
     public House findHouse(long id) {
-        return houses.get(id);
+        return houseRepository.findById(id).get();
+    }
+    public House findHouseByName(String name) {
+        return houseRepository.findHouseByName(name);
+    }
+    public House findHouseByColor(String color) {
+        return houseRepository.findHouseByColor(color);
     }
     public House editHouse(House house) {
-        houses.put(house.getId(), house);
-        return house;
+        return houseRepository.save(house);
     }
-    public House deleteHouse(long id) {
-        return houses.remove(id);
+    public void deleteHouse(long id) {
+        houseRepository.deleteById(id);
     }
     public Collection<House> getAllHouses() {
-        return houses.values();
+        return houseRepository.findAll();
     }
 }
