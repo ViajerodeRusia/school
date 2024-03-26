@@ -38,7 +38,7 @@ public class Student {
         this.name = name;
     }
 
-    public Integer getAge() {
+    public int getAge() {
         return age;
     }
 

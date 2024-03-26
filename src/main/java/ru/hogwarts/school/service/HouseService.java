@@ -1,5 +1,8 @@
 package ru.hogwarts.school.service;
 
+import org.hibernate.annotations.NotFound;
+import org.springframework.data.crossstore.ChangeSetPersister;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import ru.hogwarts.school.model.House;
 import ru.hogwarts.school.repository.HouseRepository;
@@ -15,11 +18,10 @@ public class HouseService {
     }
 
     public House createHouse(House house) {
-        houseRepository.save(house);
-        return house;
+        return houseRepository.save(house);
     }
     public House findHouse(long id) {
-        return houseRepository.findById(id).get();
+        return houseRepository.findById(id).orElse(null);
     }
     public House findHouseByName(String name) {
         return houseRepository.findHouseByName(name);

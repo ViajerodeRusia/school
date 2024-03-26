@@ -47,7 +47,7 @@ public class StudentController {
         System.out.println("min: " + min); // Добавляем эту строку для проверки
         System.out.println("max: " + max); // Добавляем эту строку для проверки
         if(min != null && max != null) {
-            ResponseEntity.ok(studentService.findStudentByAge(min, max));
+            return ResponseEntity.ok(studentService.findStudentByAge(min, max));
         }
         return ResponseEntity.ok(studentService.getAllStudents());
     }
